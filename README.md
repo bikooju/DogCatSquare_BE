@@ -7,7 +7,7 @@
 ### 주요 기능 : 홈 화면(우리 동네 날씨, D-DAY(병원방문,사료 주문등), 동네 핫플레이스, 전국 반려동물 이벤트), 반려동물 지도(병원,산책로 등), 산책하는 코스 추천하기, 반려동물 커뮤니티
 
 
-### ✔️맡은포지션 : 커뮤니티 기능 구현
+### ✔️맡은포지션 : 커뮤니티 기능 구현, AWS, CI/CD
 
 ### 커뮤니티 기능 목록
 
@@ -64,5 +64,3 @@
 
 
 ![image](https://github.com/user-attachments/assets/e8d2f596-e7c8-4c5a-a500-eaf8df60240c)
-
-![image](https://github.com/user-attachments/assets/47666af3-34dc-43a1-9184-da8617bddc71)
