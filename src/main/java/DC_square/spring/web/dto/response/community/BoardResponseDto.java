@@ -1,9 +1,12 @@
 package DC_square.spring.web.dto.response.community;
 
-import lombok.*;
-
 import java.time.LocalDateTime;
 import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Setter
@@ -12,13 +15,13 @@ import java.util.List;
 @AllArgsConstructor
 public class BoardResponseDto {
 
-    private Long id;
+  private Long id;
 
-    private String boardName;
+  private String boardType;
 
-    private String content;
+  private String content;
 
-    private List<String> keywords;
+  private List<String> keywords;
 
-    private LocalDateTime createdAt;
+  private LocalDateTime createdAt;
 }

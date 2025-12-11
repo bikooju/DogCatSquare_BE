@@ -17,59 +17,59 @@ import org.springframework.context.annotation.Configuration;
 @Getter
 public class AmazonConfig {
 
-    private AWSCredentials awsCredentials;
+  private AWSCredentials awsCredentials;
 
-    @Value("${cloud.aws.credentials.accessKey}")
-    private String accessKey;
+  @Value("${cloud.aws.credentials.accessKey}")
+  private String accessKey;
 
-    @Value("${cloud.aws.credentials.secretKey}")
-    private String secretKey;
+  @Value("${cloud.aws.credentials.secretKey}")
+  private String secretKey;
 
-    @Value("${cloud.aws.region.static}")
-    private String region;
+  @Value("${cloud.aws.region.static}")
+  private String region;
 
-    @Value("${cloud.aws.s3.bucket}")
-    private String bucket;
+  @Value("${cloud.aws.s3.bucket}")
+  private String bucket;
 
-    @Value("${cloud.aws.s3.path.profile}")
-    private String profilePath;
+  @Value("${cloud.aws.s3.path.profile}")
+  private String profilePath;
 
-    @Value("${cloud.aws.s3.path.pet}")
-    private String petPath;
+  @Value("${cloud.aws.s3.path.pet}")
+  private String petPath;
 
-    @Value("${cloud.aws.s3.path.review}")
-    private String reviewPath;
+  @Value("${cloud.aws.s3.path.review}")
+  private String reviewPath;
 
-    @Value("${cloud.aws.s3.path.walk}")
-    private String walkPath;
+  @Value("${cloud.aws.s3.path.walk}")
+  private String walkPath;
 
-    @Value("${cloud.aws.s3.path.community}")
-    private String communityPath;
+  @Value("${cloud.aws.s3.path.community}")
+  private String communityPath;
 
-    @Value("${cloud.aws.s3.path.dday}")
-    private String ddayPath;
+  @Value("${cloud.aws.s3.path.dday}")
+  private String ddayPath;
 
-    @Value("${cloud.aws.s3.path.weather}")
-    private String weatherPath;
+  @Value("${cloud.aws.s3.path.weather}")
+  private String weatherPath;
 
 
-    @PostConstruct
-    public void init() {
-        this.awsCredentials = new BasicAWSCredentials(accessKey, secretKey);
-    }
+  @PostConstruct
+  public void init() {
+    this.awsCredentials = new BasicAWSCredentials(accessKey, secretKey);
+  }
 
-    @Bean
-    public AmazonS3 amazonS3() {
-        AWSCredentials awsCredentials = new BasicAWSCredentials(accessKey, secretKey);
+  @Bean
+  public AmazonS3 amazonS3() {
+    AWSCredentials awsCredentials = new BasicAWSCredentials(accessKey, secretKey);
 
-        return AmazonS3ClientBuilder.standard()
-                .withRegion(region)
-                .withCredentials(new AWSStaticCredentialsProvider(awsCredentials))
-                .build();
-    }
+    return AmazonS3ClientBuilder.standard()
+        .withRegion(region)
+        .withCredentials(new AWSStaticCredentialsProvider(awsCredentials))
+        .build();
+  }
 
-    @Bean
-    public AWSCredentialsProvider awsCredentialsProvider() {
-        return new AWSStaticCredentialsProvider(awsCredentials);
-    }
+  @Bean
+  public AWSCredentialsProvider awsCredentialsProvider() {
+    return new AWSStaticCredentialsProvider(awsCredentials);
+  }
 }

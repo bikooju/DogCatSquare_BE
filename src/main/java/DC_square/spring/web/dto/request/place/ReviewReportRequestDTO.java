@@ -8,8 +8,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ReviewReportRequestDTO {
-    private ReportType reportType;
 
-    @Size(min = 10, max = 50, message = "기타 사유는 10자 이상 50자 이하로 입력해주세요.")
-    private String otherReason;
+  private ReportType reportType;
+
+  @Size(min = 10, max = 50, message = "기타 사유는 10자 이상 50자 이하로 입력해주세요.")
+  private String otherReason;
 }

@@ -6,6 +6,7 @@ import lombok.Setter;
 @Setter
 @Getter
 public class PlacePageRequestDTO {
-    private int page = 0;
-    private final int size = 10;
+
+  private int page = 0;
+  private final int size = 10;
 }

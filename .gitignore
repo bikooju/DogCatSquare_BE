@@ -35,3 +35,10 @@ out/
 
 ### VS Code ###
 .vscode/
+
+# Firebase 서비스 계정 키 파일 무시
+src/main/resources/firebase-service-account.json
+
+# Git 폴더들 무시
+*.git/
+BE.git/

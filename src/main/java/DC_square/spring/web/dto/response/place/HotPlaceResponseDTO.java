@@ -7,9 +7,10 @@ import lombok.Getter;
 @Getter
 @Builder
 public class HotPlaceResponseDTO {
-    private Long id;
-    private String name;
-    private PlaceCategory category;
-    private Double distance;
-    private String imgUrl;
+
+  private Long id;
+  private String name;
+  private PlaceCategory category;
+  private Double distance;
+  private String imgUrl;
 }

@@ -10,8 +10,8 @@ import lombok.Setter;
 @Builder
 public class CommentRequestDto {
 
-    @NotBlank(message = "댓글 내용은 필수입니다.")
-    private String content;
+  @NotBlank(message = "댓글 내용은 필수입니다.")
+  private String content;
 
-    private Long parentId; //대댓글인 경우 부모 댓글 ID
+  private Long parentId; //대댓글인 경우 부모 댓글 ID
 }

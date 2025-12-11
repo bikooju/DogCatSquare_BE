@@ -6,7 +6,8 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class WalkCreateResponseDto {
-    private boolean success;
-    private String message;
-    private long walkId;
+
+  private boolean success;
+  private String message;
+  private long walkId;
 }

@@ -4,7 +4,8 @@ import lombok.Builder;
 
 @Builder
 public class WalkWishResponseDto {
-    private int status;
-    private boolean success;
-    private String message;
+
+  private int status;
+  private boolean success;
+  private String message;
 }

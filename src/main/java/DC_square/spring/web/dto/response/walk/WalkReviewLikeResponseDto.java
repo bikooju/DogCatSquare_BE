@@ -8,7 +8,8 @@ import lombok.Setter;
 @Builder
 @Setter
 public class WalkReviewLikeResponseDto {
-    private int status;
-    private boolean success;
-    private String message;
+
+  private int status;
+  private boolean success;
+  private String message;
 }

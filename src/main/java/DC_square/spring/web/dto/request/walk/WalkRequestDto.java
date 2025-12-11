@@ -8,13 +8,14 @@ import lombok.Setter;
 @Setter
 @Builder
 public class WalkRequestDto {
-    private Double latitude;
-    private Double longitude;
-    private Double radius;
 
-    public WalkRequestDto(Double latitude, Double longitude, Double radius) {
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.radius = (radius == null || radius == 0) ? 1000000.0 : radius;
-    }
+  private Double latitude;
+  private Double longitude;
+  private Double radius;
+
+  public WalkRequestDto(Double latitude, Double longitude, Double radius) {
+    this.latitude = latitude;
+    this.longitude = longitude;
+    this.radius = (radius == null || radius == 0) ? 1000000.0 : radius;
+  }
 }

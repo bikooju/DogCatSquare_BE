@@ -14,47 +14,50 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class WalkReviewLikeService {
-    private final WalkReviewLikeRepository walkReviewLikeRepository;
-    private final WalkReviewRepository walkReviewRepository;
-    private final UserRepository userRepository;
+
+  private final WalkReviewLikeRepository walkReviewLikeRepository;
+  private final WalkReviewRepository walkReviewRepository;
+  private final UserRepository userRepository;
 
 
-    public WalkReviewLikeResponseDto likeWalkReview(Long walkReviewId, WalkReviewLikeRequestDto requestDto) {
-        User user = userRepository.findById(requestDto.getUserId())
-                .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다."));
+  public WalkReviewLikeResponseDto likeWalkReview(Long walkReviewId,
+      WalkReviewLikeRequestDto requestDto) {
+    User user = userRepository.findById(requestDto.getUserId())
+        .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다."));
 
-        WalkReview walkReview = walkReviewRepository.findById(walkReviewId)
-                .orElseThrow(() -> new RuntimeException("산책로 후기를 찾을 수 없습니다."));
+    WalkReview walkReview = walkReviewRepository.findById(walkReviewId)
+        .orElseThrow(() -> new RuntimeException("산책로 후기를 찾을 수 없습니다."));
 
-        if (walkReviewLikeRepository.existsByUserIdAndWalkReviewId(requestDto.getUserId(), walkReviewId)) {
-            throw new RuntimeException("이미 좋아요를 누른 상태입니다.");
-        }
-
-        WalkReviewLike walkReviewLike = WalkReviewLike.builder()
-                .user(user)
-                .walkReview(walkReview)
-                .isLiked(true)
-                .build();
-
-        walkReviewLikeRepository.save(walkReviewLike);
-
-        return WalkReviewLikeResponseDto.builder()
-                .status(200)
-                .success(true)
-                .message("좋아요를 추가했습니다.")
-                .build();
+    if (walkReviewLikeRepository.existsByUserIdAndWalkReviewId(requestDto.getUserId(),
+        walkReviewId)) {
+      throw new RuntimeException("이미 좋아요를 누른 상태입니다.");
     }
 
-    public WalkReviewLikeResponseDto cancelLike(Long likeId) {
-        WalkReviewLike walkReviewLike = walkReviewLikeRepository.findById(likeId)
-                .orElseThrow(() -> new RuntimeException("좋아요 정보를 찾을 수 없습니다."));
+    WalkReviewLike walkReviewLike = WalkReviewLike.builder()
+        .user(user)
+        .walkReview(walkReview)
+        .isLiked(true)
+        .build();
 
-        walkReviewLikeRepository.delete(walkReviewLike);
+    walkReviewLikeRepository.save(walkReviewLike);
 
-        return WalkReviewLikeResponseDto.builder()
-                .status(200)
-                .success(true)
-                .message("좋아요를 취소했습니다.")
-                .build();
-    }
+    return WalkReviewLikeResponseDto.builder()
+        .status(200)
+        .success(true)
+        .message("좋아요를 추가했습니다.")
+        .build();
+  }
+
+  public WalkReviewLikeResponseDto cancelLike(Long likeId) {
+    WalkReviewLike walkReviewLike = walkReviewLikeRepository.findById(likeId)
+        .orElseThrow(() -> new RuntimeException("좋아요 정보를 찾을 수 없습니다."));
+
+    walkReviewLikeRepository.delete(walkReviewLike);
+
+    return WalkReviewLikeResponseDto.builder()
+        .status(200)
+        .success(true)
+        .message("좋아요를 취소했습니다.")
+        .build();
+  }
 }

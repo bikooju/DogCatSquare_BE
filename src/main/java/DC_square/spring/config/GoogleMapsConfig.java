@@ -12,9 +12,10 @@ import org.springframework.context.annotation.Configuration;
 @Getter
 @Setter
 public class GoogleMapsConfig {
-    @Value("${google.maps.api-key}")
-    private String apiKey;
 
-    @Value("${google.translate.api-key}")
-    private String translateApiKey;
+  @Value("${google.maps.api-key}")
+  private String apiKey;
+
+  @Value("${google.translate.api-key}")
+  private String translateApiKey;
 }

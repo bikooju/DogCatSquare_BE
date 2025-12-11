@@ -85,9 +85,10 @@ jwt:
 weather:
   service-key: ${WEATHER_SERVICE_KEY}
 
-#  springdoc:
-#    api-docs:
-#      enabled: true
-#    swagger-ui:
-#      enabled: true
-#      path: /swagger-ui.html
+# Firebase Admin SDK 자격증명 (환경변수에 그대로 JSON 본문 세팅)
+app:
+  fcm:
+    service-account-json: ${FCM_SERVICE_ACCOUNT_JSON:}
+
+
+

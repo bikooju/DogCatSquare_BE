@@ -6,6 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class EmailVerificationResponseDto {
-    private String message;
-    private boolean verified;
+
+  private String message;
+  private boolean verified;
 }

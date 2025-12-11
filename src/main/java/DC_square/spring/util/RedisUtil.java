@@ -1,34 +1,34 @@
 package DC_square.spring.util;
 
+import java.time.Duration;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
-import java.time.Duration;
-
 @Service
 @RequiredArgsConstructor
 public class RedisUtil {
-    private final StringRedisTemplate redisTemplate;
-    private static final long VERIFICATION_CODE_EXPIRE_TIME = 300L; // 5분
 
-    public void saveVerificationCode(String email, String code) {
-        redisTemplate.opsForValue().set(
-                getKey(email),
-                code,
-                Duration.ofSeconds(VERIFICATION_CODE_EXPIRE_TIME)
-        );
-    }
+  private final StringRedisTemplate redisTemplate;
+  private static final long VERIFICATION_CODE_EXPIRE_TIME = 300L; // 5분
 
-    public String getVerificationCode(String email) {
-        return redisTemplate.opsForValue().get(getKey(email));
-    }
+  public void saveVerificationCode(String email, String code) {
+    redisTemplate.opsForValue().set(
+        getKey(email),
+        code,
+        Duration.ofSeconds(VERIFICATION_CODE_EXPIRE_TIME)
+    );
+  }
 
-    public void removeVerificationCode(String email) {
-        redisTemplate.delete(getKey(email));
-    }
+  public String getVerificationCode(String email) {
+    return redisTemplate.opsForValue().get(getKey(email));
+  }
 
-    private String getKey(String email) {
-        return "EmailVerification:" + email;
-    }
+  public void removeVerificationCode(String email) {
+    redisTemplate.delete(getKey(email));
+  }
+
+  private String getKey(String email) {
+    return "EmailVerification:" + email;
+  }
 }

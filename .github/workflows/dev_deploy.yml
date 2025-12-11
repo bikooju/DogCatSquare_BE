@@ -2,7 +2,7 @@ name: CI/CD Pipeline
 
 on:
   push:
-    branches: [ dev ]  # dev 브랜치로 푸시할때마다 실행
+    branches: [ dev ]  # dev 브랜치로 푸시할 때마다 실행
 
 jobs:
   build:
@@ -17,11 +17,17 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Make application.yml  # application.yml 파일 생성
-        run: |
-          cd ./src/main/resources
-          echo "${{ secrets.APPLICATION_YML }}" > ./application.yml
+      # application.yml을 안전하게 생성 (변수 재확장/마스킹 이슈 방지)
+      - name: Make application.yml
+        env:
+          APP_YML: ${{ secrets.APPLICATION_YML }}   # GitHub Actions secret에 저장된 전체 YAML 내용
         shell: bash
+        run: |
+          mkdir -p ./src/main/resources
+          # 내용 그대로 쓰기 (쉘이 ${...}를 다시 확장하지 않도록)
+          printf '%s' "$APP_YML" > ./src/main/resources/application.yml
+          # 비어있으면 실패 처리
+          test -s ./src/main/resources/application.yml || (echo "application.yml is empty" && exit 1)
 
       - name: Grant execute permission for gradlew  # gradlew 실행 권한 부여
         run: chmod +x gradlew
@@ -53,14 +59,39 @@ jobs:
           EC2_SSH_KEY: ${{ secrets.EC2_SSH_KEY }}
           EC2_USERNAME: ${{ secrets.EC2_USERNAME }}
           EC2_HOST: ${{ secrets.EC2_HOST }}
+          FCM_SERVICE_ACCOUNT_JSON: ${{ secrets.FCM_SERVICE_ACCOUNT_JSON }}  # 새로 추가된 시크릿
+        shell: bash
         run: |
+          # SSH 키 준비
           echo "$EC2_SSH_KEY" > private_key.pem
           chmod 600 private_key.pem
+
+          # JAR 경로/이름
           jar_file=$(find build/libs -name '*.jar' ! -name '*plain.jar' | head -n 1)
-          scp -i private_key.pem -o StrictHostKeyChecking=no "$jar_file" $EC2_USERNAME@$EC2_HOST:/home/$EC2_USERNAME/serverTest.jar
-          ssh -i private_key.pem -o StrictHostKeyChecking=no $EC2_USERNAME@$EC2_HOST "
-            pgrep java | xargs -r kill -15  # 기존에 실행 중인 Java 프로세스 종료
+          jar_name=$(basename "$jar_file")
+
+          # FCM JSON을 로컬 임시 파일로 저장 (개행/따옴표 안전)
+          printf '%s' "$FCM_SERVICE_ACCOUNT_JSON" > fcm.json
+
+          # JAR + fcm.json 전송
+          scp -i private_key.pem -o StrictHostKeyChecking=no "$jar_file" fcm.json \
+            "$EC2_USERNAME@$EC2_HOST:/home/$EC2_USERNAME/"
+
+          # 원격 실행
+          ssh -i private_key.pem -o StrictHostKeyChecking=no "$EC2_USERNAME@$EC2_HOST" "
+            # 기존 앱 종료
+            pgrep java | xargs -r kill -15
             sleep 10
-            nohup java -jar /home/$EC2_USERNAME/serverTest.jar > app.log 2>&1 &  # 새 버전 애플리케이션 실행
+
+            # Spring이 읽을 환경변수로 FCM JSON 주입
+            export FCM_SERVICE_ACCOUNT_JSON=\"\$(cat /home/$EC2_USERNAME/fcm.json)\"
+
+            # 애플리케이션 실행
+            nohup java -jar /home/$EC2_USERNAME/$jar_name > app.log 2>&1 &
+
+            # 민감 파일 즉시 삭제
+            rm -f /home/$EC2_USERNAME/fcm.json
           "
-          rm -f private_key.pem  # 민감한 정보 삭제
+
+          # 로컬 임시파일 정리
+          rm -f private_key.pem fcm.json

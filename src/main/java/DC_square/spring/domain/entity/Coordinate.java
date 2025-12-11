@@ -11,31 +11,31 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Coordinate {
 
-    private Double latitude;
-    private Double longitude;
-    private Integer sequence;
+  private Double latitude;
+  private Double longitude;
+  private Integer sequence;
 
-    public Double getLatitude() {
-        return latitude;
-    }
+  public Double getLatitude() {
+    return latitude;
+  }
 
-    public Double getLongitude() {
-        return longitude;
-    }
+  public Double getLongitude() {
+    return longitude;
+  }
 
-    public Integer getSequence() {
-        return sequence;
-    }
+  public Integer getSequence() {
+    return sequence;
+  }
 
-    public void setLatitude(Double latitude) {
-        this.latitude = latitude;
-    }
+  public void setLatitude(Double latitude) {
+    this.latitude = latitude;
+  }
 
-    public void setLongitude(Double longitude) {
-        this.longitude = longitude;
-    }
+  public void setLongitude(Double longitude) {
+    this.longitude = longitude;
+  }
 
-    public void setSequence(Integer sequence) {
-        this.sequence = sequence;
-    }
+  public void setSequence(Integer sequence) {
+    this.sequence = sequence;
+  }
 }

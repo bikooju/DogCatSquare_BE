@@ -3,33 +3,32 @@ package DC_square.spring.web.dto.request;
 import DC_square.spring.domain.entity.Event;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import java.time.LocalDate;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Getter
 @Setter
 public class EventCreateRequestDto {
-    @NotBlank(message = "이벤트 제목은 필수입니다.")
-    private String title;
 
-    @NotNull(message = "시작 날짜는 필수입니다.")
-    private String startDate;
+  @NotBlank(message = "이벤트 제목은 필수입니다.")
+  private String title;
 
-    @NotNull(message = "종료 날짜는 필수입니다.")
-    private String endDate;
+  @NotNull(message = "시작 날짜는 필수입니다.")
+  private String startDate;
 
-    private String eventUrl;
+  @NotNull(message = "종료 날짜는 필수입니다.")
+  private String endDate;
 
-    public Event toEntity(String bannerImageUrl) {
-        return Event.builder()
-                .title(title)
-                .startDate(LocalDate.parse(startDate))
-                .endDate(LocalDate.parse(endDate))
-                .bannerImageUrl(bannerImageUrl)
-                .eventUrl(eventUrl)
-                .build();
-    }
+  private String eventUrl;
+
+  public Event toEntity(String bannerImageUrl) {
+    return Event.builder()
+        .title(title)
+        .startDate(LocalDate.parse(startDate))
+        .endDate(LocalDate.parse(endDate))
+        .bannerImageUrl(bannerImageUrl)
+        .eventUrl(eventUrl)
+        .build();
+  }
 }

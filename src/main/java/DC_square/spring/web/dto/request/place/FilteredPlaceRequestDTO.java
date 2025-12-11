@@ -6,8 +6,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class FilteredPlaceRequestDTO {
-    private LocationRequestDTO location;
-    private Boolean is24Hours;
-    private Boolean hasParking;
-    private Boolean isCurrentlyOpen;
+
+  private LocationRequestDTO location;
+  private Boolean is24Hours;
+  private Boolean hasParking;
+  private Boolean isCurrentlyOpen;
 }

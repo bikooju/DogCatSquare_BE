@@ -6,7 +6,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class PlaceRequestDTO {
-    private Double longitude;
-    private Double latitude;
-    private String keyword;
+
+  private Double longitude;
+  private Double latitude;
+  private String keyword;
 }
